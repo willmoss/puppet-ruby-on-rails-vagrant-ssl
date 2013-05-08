@@ -14,7 +14,10 @@ class mysql {
 	service {
 		"mysql":
 		  ensure => running,
-		  subscribe => File["/etc/mysql/my.cnf"]
+		  subscribe => File["/etc/mysql/my.cnf"],
+		  provider => 'upstart',
+		  hasrestart => 'true',
+		  hasstatus => 'true'
 	}
 	exec {
 	  "mysql_password":
