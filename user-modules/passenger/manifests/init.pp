@@ -17,11 +17,30 @@ class passenger {
 		  before  => File["passenger_conf"],
 		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.11/ext/apache2/mod_passenger.so"
 	}
+
         package {
           "libcurl4-openssl-dev" :
             ensure => present,
             before => Exec["install_passenger"]
         }
+
+	package {
+	  "apache2-prefork-dev":
+	    ensure => present,
+	    before => Exec["install_passenger"],
+	}
+
+	package {
+	  "libapr1-dev":
+	    ensure => present,
+	    before => Exec["install_passenger"]
+	}
+
+	package {
+	  "libaprutil1-dev":
+	    ensure => present,
+	    before => Exec["install_passenger"]
+	}
 
 	file {
 		"/etc/apache2/conf.d/passenger.conf":
