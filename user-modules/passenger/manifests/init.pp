@@ -1,6 +1,6 @@
 class passenger {
 	exec {
-		"/usr/local/bin/gem install passenger -v=3.0.11":
+		"/usr/local/bin/gem install passenger -v=3.0.11 --no-ri --no-rdoc":
 		  user    => root,
 	  	  group   => root,
 		  alias   => "install_passenger",

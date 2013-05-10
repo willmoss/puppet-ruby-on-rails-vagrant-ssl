@@ -1,5 +1,21 @@
 class apache2 {
 
+
+	define makehomedir {
+
+		file {
+
+			[ "/home/webapp/${title}/" ]:
+			#"/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
+				ensure => "directory",
+				owner => "webapp",
+				mode => 777, #CHANGEME!
+				before => Class["apache"]
+			}
+
+	}
+
+
 	define site( $ssl = false, $ssl_have_certificates = false, $sitedomain = "", $documentroot = "" ) {
 		include apache2
 		if $sitedomain == "" {
@@ -8,9 +24,13 @@ class apache2 {
 			$vhost_domain = $sitedomain
 		}
 		if $documentroot == "" {
-			$vhost_root = "/var/www/${name}"
+			$vhost_root = "/home/webapp/${vhost_domain}/current/public/"
 		} else {
 			$vhost_root = $documentroot
+		}
+                
+		if !defined(Makehomedir[$vhost_domain]) {
+			makehomedir{ $vhost_domain: }
 		}
 
 		if $ssl == true {
@@ -30,32 +50,35 @@ class apache2 {
 				x509_cert { 
 				  "/etc/apache2/ssl/${vhost_domain}.crt":
 					 ensure => present,
-					 template => "/etc/puppet/user-modules/apache2/templates/cert.simple.cnf",
+				  	 template => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
 					 require => File["/etc/apache2/ssl"],
 				}
 			
 			} 
 
-			apache::vhost { "${vhost_domain}-ssl":
+			# its not possible to do namevirtualhost on SSL
+			apache::vhost { $name:
 					  port            => 443,
 					  ssl             => true,
 					  docroot         => $vhost_root,
-					  serveradmin     => "web@example.com",
-					  ssl_cert  => "/etc/apache2/ssl/${vhost_domain}.crt",
-					  ssl_key   => "/etc/apache2/ssl/${vhost_domain}.key",
+					  logroot         => "/var/log/apache2/${vhost_domain}-ssl/",
+					  serveradmin     => "info@bxmediauk.com",
+					  ssl_cert        => "/etc/apache2/ssl/${vhost_domain}.crt",
+					  ssl_key         => "/etc/apache2/ssl/${vhost_domain}.key",
 			}
 
 		}
 		 else {
 
-			apache::vhost { "localhost":
+			apache::vhost { $name:
 				    priority        => "10",
-				    vhost_name      => "localhost",
+				    vhost_name      => "*",
 				    port            => "80",
-				    docroot         => "/var/www/",
-				    logroot         => "/var/www/",
-				    serveradmin     => "webmaster@example.com",
-				    serveraliases   => ["localhost",],
+				    docroot         => $vhost_root,
+				    logroot         => "/var/log/apache2/${vhost_domain}/",
+				    serveradmin     => "info@bxmediauk.com",
+				    servername      => $vhost_domain,				    
+				    #serveraliases   => ["localhost",],
 			}
 
 		}
