@@ -1,12 +1,12 @@
 class passenger {
 	exec {
-		"/usr/local/bin/gem install passenger -v=3.0.11 --no-ri --no-rdoc":
+		"/usr/local/bin/gem install passenger --no-ri --no-rdoc":
 		  user    => root,
 	  	  group   => root,
 		  alias   => "install_passenger",
                   require => Package["apache2"],
 		  before  => [File["passenger_conf"],Exec["passenger_apache_module"]],
-		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.11/"
+		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/"
 	}
 	exec {
 		"/usr/local/bin/passenger-install-apache2-module --auto":
@@ -15,7 +15,7 @@ class passenger {
 		  path    => "/bin:/usr/bin:/usr/local/apache2/bin/",
 		  alias   => "passenger_apache_module",
 		  before  => File["passenger_conf"],
-		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-3.0.11/ext/apache2/mod_passenger.so"
+		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/ext/apache2/mod_passenger.so"
 	}
 
         package {
