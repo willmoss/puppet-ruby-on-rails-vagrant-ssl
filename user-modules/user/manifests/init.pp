@@ -3,7 +3,7 @@ class user {
 	user { 
                 "webapp":
                   ensure => present,
-                  groups => ["admin", "sudo"],
+                  groups => ["sudo"],
                   membership => minimum,
                   shell => "/bin/bash",
 		  managehome => true,

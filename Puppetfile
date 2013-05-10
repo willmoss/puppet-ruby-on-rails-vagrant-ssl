@@ -4,7 +4,7 @@ mod 'apache',
     :git => 'git://github.com/puppetlabs/puppetlabs-apache.git'
 
 mod 'openssl',
-    :git => '/etc/puppet/repos/puppet-openssl/' # need to use local repo because of stdlib dependency clash
+    :git => 'git://github.com/willmoss/puppet-openssl.git' # need to use local repo because of stdlib dependency clash
 
 # mod 'puppetlabs/stdlib'
 

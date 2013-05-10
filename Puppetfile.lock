@@ -6,14 +6,6 @@ FORGE
     ripienaar/concat (0.2.0)
 
 GIT
-  remote: /etc/puppet/repos/puppet-openssl/
-  ref: master
-  sha: c7aa77cbf423dd7941eb7e5923fbf644a7e74d96
-  specs:
-    openssl (0.1.0)
-      puppetlabs/stdlib (>= 0.0.1)
-
-GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git
   ref: master
   sha: 3a7f0b90b3dfadcd64dee14d1f437391021dbd38
@@ -22,6 +14,14 @@ GIT
       puppetlabs/firewall (>= 0.0.4)
       puppetlabs/stdlib (>= 2.2.1)
       ripienaar/concat (>= 0.2.0)
+
+GIT
+  remote: git://github.com/willmoss/puppet-openssl.git
+  ref: master
+  sha: 2a8ed8b269247b8d4d1011f4eda4aad9067ca5a2
+  specs:
+    openssl (0.1.0)
+      puppetlabs/stdlib (>= 0.0.1)
 
 DEPENDENCIES
   apache (>= 0)
