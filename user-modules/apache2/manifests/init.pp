@@ -5,7 +5,7 @@ class apache2 {
 
 		file {
 
-			[ "/home/webapp/${title}/" ]:
+			[ "/home/webapp/${title}/", "/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
 			#"/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
 				ensure => "directory",
 				owner => "webapp",
