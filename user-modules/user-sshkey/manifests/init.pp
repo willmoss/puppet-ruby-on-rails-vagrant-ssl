@@ -9,6 +9,9 @@ class user-sshkey($user,$type) {
         # in with the new
 	file {"/home/$user/.ssh":
 		ensure => directory,
+		owner => $user,
+		group => $user,
+		mode  => 0600,
 	}
 
         file { "/home/$user/.ssh/id_$type":
