@@ -12,14 +12,14 @@ node precise64 {
 	class {'apache::mod::ssl':}
 
 	# http , which redirect to ssl
-        apache2::site { "localhost-http":
-		sitedomain => "localhost",
+        apache2::site { "bxmediauk.com-http":
+		sitedomain => "bxmediauk.com",
 		ssl_redirect => true,
 	} 
 	
 	# ssl
-	apache2::site { "localhost-ssl":
-		sitedomain => "localhost",
+	apache2::site { "bxmediauk.com-ssl":
+		sitedomain => "bxmediauk.com",
 		ssl => true,
 		ssl_have_certificates => false
 	}
