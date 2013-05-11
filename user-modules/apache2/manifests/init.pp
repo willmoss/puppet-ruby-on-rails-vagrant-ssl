@@ -81,7 +81,7 @@ class apache2 {
 					    serveradmin     => "info@bxmediauk.com",
 					    servername      => $vhost_domain,
 					    rewrite_cond    => "%{HTTPS} off",
-					    rewrite_rule    => "(.*) https://%{HTTPS_HOST}%{REQUEST_URI}",				    
+					    rewrite_rule    => "(.*) https://%{HTTP_HOST}%{REQUEST_URI}",				    
 					    #serveraliases   => ["localhost",],
 				}
 			}
