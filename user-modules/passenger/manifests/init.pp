@@ -42,13 +42,13 @@ class passenger {
 	    before => Exec["install_passenger"]
 	}
 
-	file {
-		"/etc/apache2/conf.d/passenger.conf":
-		  mode    => 644,
-		  owner   => root,
-		  group   => root,
-		  alias   => "passenger_conf",
-		  notify  => Service["apache2"],
-		  source  => "puppet:///modules/passenger/passenger.conf"
-	}
+#	file {
+#		"/etc/apache2/conf.d/passenger.conf":
+#		  mode    => 644,
+#		  owner   => root,
+#		  group   => root,
+#		  alias   => "passenger_conf",
+#		  notify  => Service["apache2"],
+#		  source  => "puppet:///modules/passenger/passenger.conf"
+#	}
 }
