@@ -5,7 +5,7 @@ class passenger {
 	  	  group   => root,
 		  alias   => "install_passenger",
                   require => Package["apache2"],
-		  #before  => [File["passenger_conf"],Exec["passenger_apache_module"]],
+		  before  => [File["passenger_conf"],Exec["passenger_apache_module"]],
 		  before  => [Exec["passenger_apache_module"]],
 		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/"
 	}
@@ -15,8 +15,8 @@ class passenger {
 		  group   => root,
 		  path    => "/bin:/usr/bin:/usr/local/apache2/bin/",
 		  alias   => "passenger_apache_module",
-		  #before  => File["passenger_conf"],
-		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/ext/apache2/mod_passenger.so"
+		  before  => File["passenger_conf"],
+		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-4.0.2/libout/apache2/mod_passenger.so"
 	}
 
 	package {
@@ -43,13 +43,13 @@ class passenger {
 	    before => Exec["install_passenger"]
 	}
 
-#	file {
-#		"/etc/apache2/conf.d/passenger.conf":
-#		  mode    => 644,
-#		  owner   => root,
-#		  group   => root,
-#		  alias   => "passenger_conf",
-#		  notify  => Service["apache2"],
-#		  source  => "puppet:///modules/passenger/passenger.conf"
-#	}
+	file {
+		"/etc/apache2/conf.d/passenger.conf":
+		  mode    => 644,
+		  owner   => root,
+		  group   => root,
+		  alias   => "passenger_conf",
+		  notify  => Service["apache2"],
+		  source  => "puppet:///modules/passenger/passenger.conf"
+	}
 }
