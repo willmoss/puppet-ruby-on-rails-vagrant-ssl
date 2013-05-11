@@ -43,7 +43,7 @@ class swap(
 ) {
     if $ensure == 'present' {
         exec { 'Create swap file':
-            command     => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=3M",
+            command     => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=1M",
             creates     => $swapfile,
         }
 
