@@ -1,0 +1,19 @@
+#!/bin/bash 
+
+#http://wildlyinaccurate.com/deploying-a-git-repository-to-a-remote-server
+
+
+ssh root@5.79.22.251 << 'EOF'
+
+# download & install ruby
+aptitude update -y && aptitude install build-essential zlib1g-dev libssl-dev libreadline-dev && aptitude install git-core curl libyaml-dev libcurl4-dev libsqlite3-dev apache2-dev -y && curl --remote-name http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p194.tar.gz && tar zxf ruby-1.9.3-p194.tar.gz && cd ruby-1.9.3-p194/ && ./configure && make && sudo make install
+
+# install puppet & librarian
+mkdir /etc/puppet;
+sudo gem install puppet --no-ri --no-rdoc;
+mkdir -p ~/.puppet/var;
+sudo gem install librarian-puppet --no-ri --no-rdoc;
+
+# now run ./deploy
+
+EOF

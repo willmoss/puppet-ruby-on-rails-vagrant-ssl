@@ -18,7 +18,7 @@ class passenger {
 		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/ext/apache2/mod_passenger.so"
 	}
 
-        package {
+	package {
           "libcurl4-openssl-dev" :
             ensure => present,
             before => Exec["install_passenger"]
