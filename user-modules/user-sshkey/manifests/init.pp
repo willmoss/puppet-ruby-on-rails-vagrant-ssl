@@ -7,12 +7,17 @@ class user-sshkey($user,$type) {
         file { "/home/$user/.ssh/id_dsa.pub": ensure=>absent }
  
         # in with the new
+	file {"/home/$user/.ssh":
+		ensure => directory,
+	}
+
         file { "/home/$user/.ssh/id_$type":
                 ensure  => present,
                 source  => "puppet:///modules/user-sshkey/$user/id_$type",
                 owner   => $user,
                 group   => $user,
                 mode    => 0600,
+		require => File["/home/$user/.ssh"],
         }
         file { "/home/$user/.ssh/id_$type.pub":
                 ensure => present,
@@ -20,6 +25,7 @@ class user-sshkey($user,$type) {
                 owner   => $user,
                 group   => $user,
                 mode    => 0644,
+		require => File["/home/$user/.ssh"],
         }
  
         # install the new key
