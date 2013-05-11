@@ -5,7 +5,7 @@ node precise64 {
 	include apache
 	include passenger
 	include user
-	#include swap
+	include swap
 
         # Install apache
 	# requires: puppet module install rcoleman/puppet_module 
@@ -29,5 +29,5 @@ node precise64 {
         }
 
         Class["User"] -> Class["apache2"]		
-	#Class["swap"] -> Class["passenger"] # passenger requires larger swap
+	Class["swap"] -> Class["passenger"] # passenger requires larger swap
 }
