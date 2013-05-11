@@ -11,9 +11,10 @@ node precise64 {
 	# requires: puppet module install rcoleman/puppet_module 
 	class {'apache::mod::ssl':}
 
-	# http
+	# http , which redirect to ssl
         apache2::site { "localhost-http":
-		sitedomain => "localhost"
+		sitedomain => "localhost",
+		ssl_redirect => true,
 	} 
 	
 	# ssl

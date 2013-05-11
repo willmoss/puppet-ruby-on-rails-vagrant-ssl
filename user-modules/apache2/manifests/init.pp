@@ -16,7 +16,7 @@ class apache2 {
 	}
 
 
-	define site( $ssl = false, $ssl_have_certificates = false, $sitedomain = "", $documentroot = "" ) {
+	define site( $ssl = false, $ssl_have_certificates = false, $ssl_redirect = false, $sitedomain = "", $documentroot = "" ) {
 		include apache2
 		if $sitedomain == "" {
 			$vhost_domain = $name
@@ -69,18 +69,36 @@ class apache2 {
 
 		}
 		 else {
+			# is it an SSL redirect node?
+			if $ssl_redirect == true {
 
-			apache::vhost { $name:
-				    priority        => "10",
-				    vhost_name      => "*",
-				    port            => "80",
-				    docroot         => $vhost_root,
-				    logroot         => "/var/log/apache2/${vhost_domain}/",
-				    serveradmin     => "info@bxmediauk.com",
-				    servername      => $vhost_domain,				    
-				    #serveraliases   => ["localhost",],
+				apache::vhost { $name:
+					    priority        => "10",
+					    vhost_name      => "*",
+					    port            => "80",
+					    docroot         => $vhost_root,
+					    logroot         => "/var/log/apache2/${vhost_domain}/",
+					    serveradmin     => "info@bxmediauk.com",
+					    servername      => $vhost_domain,
+					    rewrite_cond    => "%{HTTPS} off",
+					    rewrite_rule    => "(.*) https://%{HTTPS_HOST}%{REQUEST_URI}",				    
+					    #serveraliases   => ["localhost",],
+				}
 			}
 
+			else { 
+
+				apache::vhost { $name:
+					    priority        => "10",
+					    vhost_name      => "*",
+					    port            => "80",
+					    docroot         => $vhost_root,
+					    logroot         => "/var/log/apache2/${vhost_domain}/",
+					    serveradmin     => "info@bxmediauk.com",
+					    servername      => $vhost_domain,				    
+					    #serveraliases   => ["localhost",],
+				}
+			}
 		}
 	}
 
