@@ -33,6 +33,13 @@
 #         include base::swap
 #     }
 #
+
+
+#RUN THESE COMMANDS:
+
+#/bin/dd if=/dev/zero of=/mnt/swap.1 bs=1M count=1M
+#/sbin/mkswap /mnt/swap.1 && /sbin/swapon /mnt/swap.1
+
 class swap(
     $ensure         = 'present',
     $swapfile       = '/mnt/swap.1', # Where to create the swapfile.
@@ -43,14 +50,16 @@ class swap(
 ) {
     if $ensure == 'present' {
         exec { 'Create swap file':
-            command     => "/bin/dd if=/dev/zero of=${swapfile} bs=1M count=1M",
+            command     => "/bin/dd if=/dev/zero of=${swapfile} bs=1024 count=1M",
             creates     => $swapfile,
+            timeout     => 0,
         }
 
         exec { 'Attach swap file':
             command => "/sbin/mkswap ${swapfile} && /sbin/swapon ${swapfile}",
             require => Exec['Create swap file'],
             unless  => "/sbin/swapon -s | grep ${swapfile}",
+            timeout => 0
         }
     }
     elsif $ensure == 'absent' {
