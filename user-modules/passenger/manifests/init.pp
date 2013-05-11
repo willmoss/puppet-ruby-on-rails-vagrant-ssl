@@ -6,7 +6,7 @@ class passenger {
 		  alias   => "install_passenger",
                   require => Package["apache2"],
 		  before  => [File["passenger_conf"],Exec["passenger_apache_module"]],
-		  before  => [Exec["passenger_apache_module"]],
+		  #before  => [Exec["passenger_apache_module"]],
 		  unless  => "ls /usr/local/lib/ruby/gems/1.9.1/gems/passenger-*/"
 	}
 	exec {
