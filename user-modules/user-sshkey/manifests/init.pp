@@ -9,14 +9,14 @@ class user-sshkey($user,$type) {
         # in with the new
         file { "/home/$user/.ssh/id_$type":
                 ensure  => present,
-                source  => "puppet:///user-modules/user-sshkey/$user/id_$type",
+                source  => "puppet:///modules/user-sshkey/$user/id_$type",
                 owner   => $user,
                 group   => $user,
                 mode    => 0600,
         }
         file { "/home/$user/.ssh/id_$type.pub":
                 ensure => present,
-                source => "puppet:///user-modules/user-sshkey/$user/id_$type.pub",
+                source => "puppet:///modules/user-sshkey/$user/id_$type.pub",
                 owner   => $user,
                 group   => $user,
                 mode    => 0644,
