@@ -99,6 +99,7 @@ class apache2 {
 					  serveradmin     => "info@bxmediauk.com",
 					  ssl_cert        => "/etc/apache2/ssl/${vhost_domain}.crt",
 					  ssl_key         => "/etc/apache2/ssl/${vhost_domain}.key",
+				   	  ssl_chain       => "/etc/apache2/ssl/${vhost_domain}.bundle.crt",
 			}
 
 		}
