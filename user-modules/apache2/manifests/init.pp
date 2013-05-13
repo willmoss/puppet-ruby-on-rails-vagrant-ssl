@@ -63,7 +63,8 @@ class apache2 {
 					owner => root,
 					group => root,
 					before => Class["apache"],
-					source => "puppet:///modules/apache2/${vhost_domain}.crt"
+					source => "puppet:///modules/apache2/${vhost_domain}.crt",
+					notify => Service["apache2"],
 				}
 	 
 				file {
@@ -74,6 +75,7 @@ class apache2 {
 					group => root,
 					before => Class["apache"],
 					source => "puppet:///modules/apache2/${vhost_domain}.key"
+					notify => Service["apache2"],
 				}
 			}
 
