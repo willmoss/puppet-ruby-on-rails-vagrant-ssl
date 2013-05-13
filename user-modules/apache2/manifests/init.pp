@@ -37,6 +37,8 @@ class apache2 {
 
 			if $ssl_have_certificates == false {		
 
+				notify { "Creating SSL certificates for ${vhost_domain}": }
+
 				$commonname = $vhost_domain
 
 				# create pkey
