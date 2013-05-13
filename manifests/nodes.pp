@@ -21,7 +21,7 @@ node precise64 {
 	apache2::site { "bxmediauk.com-ssl":
 		sitedomain => "bxmediauk.com",
 		ssl => true,
-		ssl_have_certificates => false
+		ssl_have_certificates => true
 	}
         # bundler
 	package {

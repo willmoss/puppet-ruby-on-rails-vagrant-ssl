@@ -64,7 +64,6 @@ class apache2 {
 					mode => 644,
 					owner => root,
 					group => root,
-					before => Class["apache"],
 					source => "puppet:///modules/apache2/${vhost_domain}.crt",
 					notify => Service["apache2"],
 				}
@@ -75,10 +74,20 @@ class apache2 {
 					mode => 644,
 					owner => root,
 					group => root,
-					before => Class["apache"],
 					source => "puppet:///modules/apache2/${vhost_domain}.key",
 					notify => Service["apache2"],
 				}
+
+				file {
+					"/etc/apache2/ssl/${vhost_domain}.bundle.crt":
+					ensure => present,
+					mode => 644,
+					owner => root,
+					group => root,
+					source => "puppet:///modules/apache2/${vhost_domain}.bundle.crt",
+					notify => Service["apache2"],
+				}
+
 			}
 
 			# its not possible to do namevirtualhost on SSL
