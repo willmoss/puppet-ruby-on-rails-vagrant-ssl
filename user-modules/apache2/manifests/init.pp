@@ -74,7 +74,7 @@ class apache2 {
 					owner => root,
 					group => root,
 					before => Class["apache"],
-					source => "puppet:///modules/apache2/${vhost_domain}.key"
+					source => "puppet:///modules/apache2/${vhost_domain}.key",
 					notify => Service["apache2"],
 				}
 			}
