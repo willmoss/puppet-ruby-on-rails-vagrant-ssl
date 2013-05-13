@@ -10,7 +10,8 @@ class apache2 {
 				ensure => "directory",
 				owner => "webapp",
 				mode => 777, #CHANGEME!
-				before => Class["apache"]
+				before => Class["apache"],
+				replace => false,
 			}
 
 	}
