@@ -54,7 +54,28 @@ class apache2 {
 					 require => File["/etc/apache2/ssl"],
 				}
 			
-			} 
+			} else {
+
+				file {
+					"/etc/apache2/ssl/${vhost_domain}.crt":
+					ensure => present,
+					mode => 644,
+					owner => root,
+					group => root,
+					before => Class["apache"],
+					source => "puppet:///modules/apache2/${vhost_domain}.crt"
+				}
+	 
+				file {
+					"/etc/apache2/ssl/${vhost_domain}.key":
+					ensure => present,
+					mode => 644,
+					owner => root,
+					group => root,
+					before => Class["apache"],
+					source => "puppet:///modules/apache2/${vhost_domain}.key"
+				}
+			}
 
 			# its not possible to do namevirtualhost on SSL
 			apache::vhost { $name:
