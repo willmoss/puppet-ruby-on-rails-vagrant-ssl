@@ -29,6 +29,10 @@ node precise64 {
                   provider => gem
         }
 
+
+	# Install MTA
+	class { 'postfix': }
+
         Class["User"] -> Class["apache2"]		
 	Class["swap"] -> Class["passenger"] # passenger requires larger swap
 }
