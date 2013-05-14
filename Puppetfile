@@ -6,7 +6,7 @@ mod 'apache',
 mod 'openssl',
     :git => 'git://github.com/willmoss/puppet-openssl.git' # need to use local repo because of stdlib dependency clash
 
-mod 'postfix'
+mod 'postfix',
     :git => 'git://github.com/example42/puppet-postfix.git'
 
 # mod 'puppetlabs/stdlib'
