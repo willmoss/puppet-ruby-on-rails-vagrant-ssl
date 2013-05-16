@@ -31,7 +31,7 @@ node precise64 {
 
 
 	# Install MTA
-	class { 'postfix': }
+	# class { 'postfix': }
 
         Class["User"] -> Class["apache2"]		
 	Class["swap"] -> Class["passenger"] # passenger requires larger swap
