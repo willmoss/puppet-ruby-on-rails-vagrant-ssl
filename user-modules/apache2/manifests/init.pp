@@ -120,12 +120,12 @@ class apache2 {
 			}
 
 			# set up different rack environments
-			#$config_file = "/etc/apache2/sites-enabled/${priority}-${name}.conf"
+			$config_file = "/etc/apache2/sites-enabled/${priority}-${name}.conf"
 			
-			#addrackenvs { $rack_envs:
-			#  configfile => $config_file,
-			#  docroot => $vhost_root,
-			#}
+			addrackenvs { $rack_envs:
+			  configfile => $config_file,
+			  docroot => $vhost_root,
+			}
 
 		}
 		 else {
