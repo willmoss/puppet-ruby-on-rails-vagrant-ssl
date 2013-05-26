@@ -64,6 +64,7 @@ class apache2 {
           private_key => "/etc/apache2/ssl/${vhost_domain}.key",
           template    => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
           force       => false,
+          require => Ssl_pkey["/etc/apache2/ssl/${vhost_domain}.key"],
         }
 
 				# its not possible to do namevirtualhost on SSL
