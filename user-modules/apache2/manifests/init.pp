@@ -62,6 +62,7 @@ class apache2 {
           ensure      => present,
           password    => 'j(D$',
           private_key => "/etc/apache2/ssl/${vhost_domain}.key",
+          template    => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
           force       => false,
         }
 
