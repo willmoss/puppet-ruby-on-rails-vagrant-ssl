@@ -6,10 +6,9 @@ class apache2 {
 		file {
 
 			[ "/home/webapp/${title}/", "/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
-			#"/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
 				ensure => "directory",
 				owner => "webapp",
-				mode => 777, #CHANGEME!
+				mode => 775, #CHANGEME!
 				before => Class["apache"],
 				replace => false,
 			}
@@ -17,8 +16,9 @@ class apache2 {
 	}
 
 
-	define site( $ssl = false, $ssl_have_certificates = false, $ssl_redirect = false, $sitedomain = "", $documentroot = "" ) {
+	define site( $ssl = false, $ssl_have_certificates = false, $ssl_redirect = false, $sitedomain = "", $documentroot = "", $wordpress = false, $rack_envs = [], $priority="10") {
 		include apache2
+		#include wordpress
 		if $sitedomain == "" {
 			$vhost_domain = $name
 		} else {
@@ -36,9 +36,9 @@ class apache2 {
 
 		if $ssl == true {
 
-			if $ssl_have_certificates == false {		
+			if $ssl_have_certificates == false {
 
-				notify { "Creating SSL certificates for ${vhost_domain}": }
+				#notify { "Creating SSL certificates for ${vhost_domain}": }
 
 				$commonname = $vhost_domain
 
@@ -55,6 +55,19 @@ class apache2 {
 					 ensure => present,
 				  	 template => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
 					 require => File["/etc/apache2/ssl"],
+				}
+
+				# its not possible to do namevirtualhost on SSL
+				apache::vhost { $name:
+					  port            => 443,
+					  ssl             => true,
+					  docroot         => $vhost_root,
+					  logroot         => "/var/log/apache2/${vhost_domain}-ssl/",
+					  serveradmin     => "info@bxmediauk.com",
+					  ssl_cert        => "/etc/apache2/ssl/${vhost_domain}.crt",
+					  ssl_key         => "/etc/apache2/ssl/${vhost_domain}.key",
+					  priority        => $priority,
+					  
 				}
 			
 			} else {
@@ -89,10 +102,8 @@ class apache2 {
 					notify => Service["apache2"],
 				}
 
-			}
-
-			# its not possible to do namevirtualhost on SSL
-			apache::vhost { $name:
+				# its not possible to do namevirtualhost on SSL
+				apache::vhost { $name:
 					  port            => 443,
 					  ssl             => true,
 					  docroot         => $vhost_root,
@@ -100,8 +111,19 @@ class apache2 {
 					  serveradmin     => "info@bxmediauk.com",
 					  ssl_cert        => "/etc/apache2/ssl/${vhost_domain}.crt",
 					  ssl_key         => "/etc/apache2/ssl/${vhost_domain}.key",
-				   	  ssl_chain       => "/etc/apache2/ssl/${vhost_domain}.bundle.crt",
+				   	ssl_chain       => "/etc/apache2/ssl/${vhost_domain}.bundle.crt",
+				   	priority        => $priority,
+				}
+
 			}
+
+			# set up different rack environments
+			#$config_file = "/etc/apache2/sites-enabled/${priority}-${name}.conf"
+			
+			#addrackenvs { $rack_envs:
+			#  configfile => $config_file,
+			#  docroot => $vhost_root,
+			#}
 
 		}
 		 else {
@@ -109,7 +131,7 @@ class apache2 {
 			if $ssl_redirect == true {
 
 				apache::vhost { $name:
-					    priority        => "10",
+					    priority        => $priority,
 					    vhost_name      => "*",
 					    port            => "80",
 					    docroot         => $vhost_root,
@@ -122,23 +144,59 @@ class apache2 {
 				}
 			}
 
-			else { 
-
-				apache::vhost { $name:
-					    priority        => "10",
-					    vhost_name      => "*",
-					    port            => "80",
-					    docroot         => $vhost_root,
-					    logroot         => "/var/log/apache2/${vhost_domain}/",
-					    serveradmin     => "info@bxmediauk.com",
-					    servername      => $vhost_domain,				    
-					    #serveraliases   => ["localhost",],
-				}
-			}
 		}
+
 	}
 
-
+	define addrackenvs ($configfile, $docroot) {
+	  
+	  $dir = $title['dir']
+	  $path = $title['path']
+	  
+	  # check dir exists & symlink
+    exec { $dir:
+        path    => [ '/bin', '/usr/bin' ],
+        command => "mkdir -p ${dir}",
+        unless  => "test -d ${dir}",
+    }
+    
+    #notice("docroot: ${docroot} , path: ${path}")
+    
+		file { "${docroot}${path}":
+       ensure => 'link',
+       target => $dir,
+       require => Exec[$dir],
+    }
+	  
+	  # this is a hack
+	  
+	  # remove </VirtualHost> directive
+	  file_line { "${path} remove virtualHost": 
+				line => "</VirtualHost>", 
+				path => $configfile, 
+				#match => "</VirtualHost>", 
+				ensure => absent,
+				require => File["${docroot}${path}"],
+		}
+	  
+	  file_line { $path: 
+				line => "\n\n  RackBaseURI ${path}\n  <Directory ${dir}>\n  Options -MultiViews\n  </Directory>\n\n", 
+				path => $configfile,
+				ensure => present,
+				require => File_line["${path} remove virtualHost"],
+		}
+		
+		# add </VirtualHost> directive again
+		file_line { "${path} add virtualHost": 
+				line => "</VirtualHost>", 
+				path => $configfile, 
+				#match => "</VirtualHost>", 
+				ensure => present,
+				require => File_line[$path],
+		}
+		
+	}
+	
 	define snippet() {
 		file { 
 		  "/etc/apache2/conf.d/${name}":

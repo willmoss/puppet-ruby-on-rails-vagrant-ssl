@@ -27,6 +27,10 @@ class mysql {
 	  "massiveapp_db":
 	    unless  => "mysql -uroot -proot two_factor_production",
 	    command => "mysql -uroot -proot -e 'create database two_factor_production'",
-	    require => Exec["mysql_password"]
+	    require => Exec["mysql_password"];
+	  "wordpress_db":
+	    unless  => "mysql -uroot -proot wordpress",
+	    command => "mysql -uroot -proot -e \"create database wordpress; CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'wordpress12'; GRANT ALL PRIVILEGES ON * . * TO 'wordpress'@'localhost';\"",
+	    require => Exec["mysql_password"];
 	}
 }

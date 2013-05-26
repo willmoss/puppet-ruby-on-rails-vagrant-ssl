@@ -9,6 +9,9 @@ mod 'openssl',
 mod 'postfix',
     :git => 'git://github.com/example42/puppet-postfix.git'
 
+mod 'wordpress',
+    :git => 'git://github.com/hunner/puppet-wordpress.git'
+
 # mod 'puppetlabs/stdlib'
 
 # mod 'ntp',

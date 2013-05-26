@@ -3,3 +3,4 @@ modules/
 *.lock
 *.swp
 *.DS_Store
+*~

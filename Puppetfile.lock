@@ -1,9 +1,39 @@
 FORGE
   remote: http://forge.puppetlabs.com
   specs:
+    example42/firewall (2.0.0)
+      example42/iptables (>= 2.0.0)
+      example42/puppi (>= 2.0.0)
+    example42/iptables (2.0.1)
+      example42/puppi (>= 2.0.0)
+    example42/monitor (2.0.0)
+      example42/puppi (>= 2.0.0)
+    example42/puppi (2.0.8)
     puppetlabs/firewall (0.3.0)
+    puppetlabs/mysql (0.6.1)
+      puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/stdlib (3.2.0)
     ripienaar/concat (0.2.0)
+
+GIT
+  remote: git://github.com/example42/puppet-postfix.git
+  ref: master
+  sha: 445340dbde8cdbacca4736e2fe397b2801261341
+  specs:
+    postfix (2.0.7)
+      example42/firewall (>= 2.0.0)
+      example42/monitor (>= 2.0.0)
+      example42/puppi (>= 2.0.0)
+
+GIT
+  remote: git://github.com/hunner/puppet-wordpress.git
+  ref: master
+  sha: 4b583d106bc298a92e6fc6064f8a769168fbe017
+  specs:
+    wordpress (0.3.0)
+      puppetlabs/mysql (>= 0.5.0)
+      puppetlabs/stdlib (>= 2.3.1)
+      ripienaar/concat (>= 0.2.0)
 
 GIT
   remote: git://github.com/puppetlabs/puppetlabs-apache.git
@@ -26,4 +56,6 @@ GIT
 DEPENDENCIES
   apache (>= 0)
   openssl (>= 0)
+  postfix (>= 0)
+  wordpress (>= 0)
 
