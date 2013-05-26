@@ -63,6 +63,7 @@ class apache2 {
 					  ssl             => true,
 					  docroot         => $vhost_root,
 					  logroot         => "/var/log/apache2/${vhost_domain}-ssl/",
+					  servername      => $vhost_domain,
 					  serveradmin     => "info@bxmediaus.com",
 					  ssl_cert        => "/etc/apache2/ssl/${vhost_domain}.crt",
 					  ssl_key         => "/etc/apache2/ssl/${vhost_domain}.key",
@@ -104,6 +105,7 @@ class apache2 {
 
 				# its not possible to do namevirtualhost on SSL
 				apache::vhost { $name:
+				    servername      => $vhost_domain,
 					  port            => 443,
 					  ssl             => true,
 					  docroot         => $vhost_root,
