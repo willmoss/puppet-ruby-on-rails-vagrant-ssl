@@ -9,6 +9,10 @@ class php {
     require => Package["php5"],
   }
   
+  file {'/etc/php.ini':
+    ensure => file,
+  }
+  
   file { "php5.load":
     path => "/etc/apache2/mods-available/php5.load",
     ensure => file,
