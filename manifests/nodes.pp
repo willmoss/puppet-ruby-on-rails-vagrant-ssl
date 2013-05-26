@@ -13,34 +13,34 @@ node precise64 {
   }
   
 	# http , which redirect to ssl
-  apache2::site { "bxmediauk.com-http":
-		#sitedomain => "bxmediauk.com",
-		sitedomain => "localhost",
+  apache2::site { "bxmediaus.com-http":
+		sitedomain => "bxmediaus.com",
+		#sitedomain => "localhost",
 		ssl_redirect => true,
 	} 
 	
 	# define different rack environments
 	$rack = [
-		{'path' => '/trade','dir' => '/home/webapp/bxmediauk.com.wmtrade/current/public/'}, 
-		{'path' => '/bicho','dir' => '/home/webapp/bxmediauk.com.bicho/current/public/'},
+		{'path' => '/trade','dir' => '/home/webapp/bxmediaus.com.wmtrade/current/public/'}, 
+		{'path' => '/bicho','dir' => '/home/webapp/bxmediaus.com.bicho/current/public/'},
 	]
 
 	# ssl
-	apache2::site { "bxmediauk.com-ssl":
-		#sitedomain => "bxmediauk.com",
-		sitedomain => "localhost",
+	apache2::site { "bxmediaus.com-ssl":
+		sitedomain => "bxmediaus.com",
+		#sitedomain => "localhost",
 		ssl => true,
 		#ssl_have_certificates => true,
 		ssl_have_certificates => false,
 		rack_envs => $rack,
-		documentroot => "/home/webapp/bxmediauk.com.wordpress/",
+		documentroot => "/home/webapp/bxmediaus.com.wordpress/",
 		priority => 25, 
 		before => Class['wordpress'],
 	}
         
 	# install wordpress?
 	class { 'wordpress':
-		install_dir => '/home/webapp/bxmediauk.com.wordpress',
+		install_dir => '/home/webapp/bxmediaus.com.wordpress',
 		wp_owner    => 'webapp',
 		db_user     => 'wordpress',
 		db_password => 'wordpress12',
