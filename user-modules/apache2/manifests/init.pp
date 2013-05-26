@@ -41,7 +41,8 @@ class apache2 {
 				#notify { "Creating SSL certificates for ${vhost_domain}": }
 
 				$commonname = $vhost_domain
-				$countryName = US
+				$country = US
+				$organization = BX
 
 				# create pkey
 				ssl_pkey { 
