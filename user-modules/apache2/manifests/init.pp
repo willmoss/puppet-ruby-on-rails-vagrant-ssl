@@ -58,10 +58,10 @@ class apache2 {
 				}
 				
 				# create request
-				x509_request { '/etc/apache2/ssl/${vhost_domain}.csr':
-          ensure      => 'present',
+				x509_request { "/etc/apache2/ssl/${vhost_domain}.csr":
+          ensure      => present,
           password    => 'j(D$',
-          private_key => '/etc/apache2/ssl/${vhost_domain}.key',
+          private_key => "/etc/apache2/ssl/${vhost_domain}.key",
           force       => false,
         }
 
