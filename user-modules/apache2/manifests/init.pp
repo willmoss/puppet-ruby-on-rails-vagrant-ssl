@@ -41,6 +41,7 @@ class apache2 {
 				#notify { "Creating SSL certificates for ${vhost_domain}": }
 
 				$commonname = $vhost_domain
+				$countryName = US
 
 				# create pkey
 				ssl_pkey { 
@@ -53,7 +54,7 @@ class apache2 {
 				x509_cert { 
 				  "/etc/apache2/ssl/${vhost_domain}.crt":
 					 ensure => present,
-				   template => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
+				   template => "/etc/puppet/user-modules/apache2/templates/cert.cnf.erb",
 					 require => File["/etc/apache2/ssl"],
 				}
 				
@@ -62,7 +63,7 @@ class apache2 {
           ensure      => present,
           password    => 'j(D$',
           private_key => "/etc/apache2/ssl/${vhost_domain}.key",
-          template    => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
+          template    => "/etc/puppet/user-modules/apache2/templates/cert.cnf.erb",
           force       => false,
           require => Ssl_pkey["/etc/apache2/ssl/${vhost_domain}.key"],
         }
