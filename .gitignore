@@ -4,3 +4,4 @@ modules/
 *.swp
 *.DS_Store
 *~
+*#
