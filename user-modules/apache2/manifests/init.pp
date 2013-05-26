@@ -53,9 +53,17 @@ class apache2 {
 				x509_cert { 
 				  "/etc/apache2/ssl/${vhost_domain}.crt":
 					 ensure => present,
-				  	 template => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
+				   template => "/etc/puppet/user-modules/apache2/templates/cert.simple.erb",
 					 require => File["/etc/apache2/ssl"],
 				}
+				
+				# create request
+				x509_request { '/etc/apache2/ssl/${vhost_domain}.csr':
+          ensure      => 'present',
+          password    => 'j(D$',
+          private_key => '/etc/apache2/ssl/${vhost_domain}.key',
+          force       => false,
+        }
 
 				# its not possible to do namevirtualhost on SSL
 				apache::vhost { $name:
