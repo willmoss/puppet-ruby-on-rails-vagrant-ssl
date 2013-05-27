@@ -170,21 +170,22 @@ class apache2 {
 	  # check dir exists & symlink
     exec { $dir:
         path    => [ '/bin', '/usr/bin' ],
-        command => "mkdir -p ${dir}",
+        command => "su - webapp; mkdir -p ${dir}",
         unless  => "test -d ${dir}",
     }
     
 		file { "${docroot}${path}":
        ensure => 'link',
        target => $dir,
+       owner  => webapp,
        require => Exec[$dir],
     }
     
-    exec { "chown ${dir}":
-        path    => [ '/bin', '/usr/bin' ],
-        command => "chown webapp ${dir}",
-        require => File["${docroot}${path}"],
-    }
+    #exec { "chown ${dir}":
+    #    path    => [ '/bin', '/usr/bin' ],
+    #    command => "chown webapp ${dir}",
+    #    require => File["${docroot}${path}"],
+    #}
 	  
 	  # this is a hack
 	  
