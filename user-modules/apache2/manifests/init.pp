@@ -174,12 +174,16 @@ class apache2 {
         unless  => "test -d ${dir}",
     }
     
-    #notice("docroot: ${docroot} , path: ${path}")
-    
 		file { "${docroot}${path}":
        ensure => 'link',
        target => $dir,
        require => Exec[$dir],
+    }
+    
+    exec { "chown ${dir}":
+        path    => [ '/bin', '/usr/bin' ],
+        command => "chown webapp ${dir}",
+        require => File["${docroot}${path}"],
     }
 	  
 	  # this is a hack
