@@ -11,6 +11,9 @@ mod 'postfix',
 
 mod 'wordpress',
     :git => 'git://github.com/hunner/puppet-wordpress.git'
+    
+mod 'vsftpd',
+    :git => 'git://github.com/thias/puppet-vsftpd.git'
 
 # mod 'puppetlabs/stdlib'
 
