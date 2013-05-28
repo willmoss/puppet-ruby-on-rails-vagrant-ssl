@@ -56,7 +56,7 @@ node precise64 {
     chroot_local_user => 'NO',
     userlist_enable => 'YES',
     #userlist_file
-    userlist_deny = 'NO',
+    userlist_deny => 'NO',
   }
   
   # wordpress user (for ftp)
