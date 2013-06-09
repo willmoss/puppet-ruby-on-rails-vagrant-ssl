@@ -52,11 +52,11 @@ node precise64 {
 	class { 'vsftpd':
     anonymous_enable  => 'NO',
     write_enable      => 'YES',
-    ftpd_banner       => 'Wordpress FTP Server',
-    chroot_local_user => 'NO',
-    userlist_enable => 'YES',
+    ftpd_banner       => 'FTP Server',
+    chroot_local_user => 'NO'
+    #userlist_enable => 'YES',
     #userlist_file
-    userlist_deny => 'NO',
+    #userlist_deny => 'NO',
   }
   
   # wordpress user (for ftp)
