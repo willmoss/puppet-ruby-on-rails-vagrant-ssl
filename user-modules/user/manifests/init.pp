@@ -4,7 +4,7 @@ class user {
 	user { 
     "webapp":
       ensure => present,
-      groups => ["sudo","wordpress"],
+      #groups => ["sudo","wordpress"],
       membership => minimum,
       shell => "/bin/bash",
 		  managehome => true,
