@@ -50,15 +50,15 @@ node precise64 {
 	}
 	
 	# install ftp for wordpress plugins
-	class { 'vsftpd':
-    anonymous_enable  => 'NO',
-    write_enable      => 'YES',
-    ftpd_banner       => 'FTP Server',
-    chroot_local_user => 'NO'
-    #userlist_enable => 'YES',
-    #userlist_file
-    #userlist_deny => 'NO',
-  }
+	#class { 'vsftpd':
+  #  anonymous_enable  => 'NO',
+  #  write_enable      => 'YES',
+  #  ftpd_banner       => 'FTP Server',
+  #  chroot_local_user => 'NO'
+  #  #userlist_enable => 'YES',
+  #  #userlist_file
+  #  #userlist_deny => 'NO',
+  #}
   
   # TO DO: install VPN server http://www.howtogeek.com/51237/setting-up-a-vpn-pptp-server-on-debian/
   
