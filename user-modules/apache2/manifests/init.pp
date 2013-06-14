@@ -181,9 +181,9 @@ class apache2 {
        require => Exec[$dir],
     }
     
-    exec { "chown ${dir}":
+    exec { "chown ${path}":
         path    => [ '/bin', '/usr/bin' ],
-        command => "chown webapp ${dir}",
+        command => "chown -R webapp ${docroot}${path}",
         require => File["${docroot}${path}"],
     }
 	  
