@@ -181,11 +181,11 @@ class apache2 {
        require => Exec[$dir],
     }
     
-    #exec { "chown ${dir}":
-    #    path    => [ '/bin', '/usr/bin' ],
-    #    command => "chown webapp ${dir}",
-    #    require => File["${docroot}${path}"],
-    #}
+    exec { "chown ${dir}":
+        path    => [ '/bin', '/usr/bin' ],
+        command => "chown webapp ${dir}",
+        require => File["${docroot}${path}"],
+    }
 	  
 	  # this is a hack
 	  
