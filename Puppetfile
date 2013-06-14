@@ -14,6 +14,9 @@ mod 'wordpress',
     
 mod 'vsftpd',
     :git => 'git://github.com/thias/puppet-vsftpd.git'
+    
+mod 'nodejs',
+    :git => 'git://github.com/puppetlabs/puppetlabs-nodejs.git'
 
 # mod 'puppetlabs/stdlib'
 

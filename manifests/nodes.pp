@@ -6,6 +6,7 @@ node precise64 {
 	include user
 	include swap
   include php 
+  include nodejs # install nodejs
 
   # Install apache
   class {'apache':
