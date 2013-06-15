@@ -6,8 +6,10 @@ node precise64 {
 	include user
 	include swap
   include php 
-  include nodejs # install nodejs
-
+  
+  # install node js
+  class {'nodejs':}
+  
   # Install apache
   class {'apache':
      mpm_module => prefork,
