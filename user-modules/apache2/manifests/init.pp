@@ -8,7 +8,7 @@ class apache2 {
 			[ "/home/webapp/${title}/", "/home/webapp/${title}/current/", "/home/webapp/${title}/current/public/" ]:
 				ensure => "directory",
 				owner => "webapp",
-				mode => 775, #CHANGEME!
+				mode => 775,
 				before => Class["apache"],
 				replace => false,
 			}
@@ -18,7 +18,7 @@ class apache2 {
 
 	define site( $ssl = false, $ssl_have_certificates = false, $ssl_redirect = false, $sitedomain = "", $documentroot = "", $wordpress = false, $rack_envs = [], $priority="10") {
 		include apache2
-		#include wordpress
+		
 		if $sitedomain == "" {
 			$vhost_domain = $name
 		} else {
@@ -38,11 +38,7 @@ class apache2 {
 
 			if $ssl_have_certificates == false {
 
-				#notify { "Creating SSL certificates for ${vhost_domain}": }
-
-				#$commonname = $vhost_domain
-				#$country = US
-				#$organization = BX
+				notify { "Creating SSL certificates for ${vhost_domain}": }
 
 				# create pkey
 				ssl_pkey { 
@@ -209,7 +205,6 @@ class apache2 {
 		file_line { "${path} add virtualHost": 
 				line => "</VirtualHost>", 
 				path => $configfile, 
-				#match => "</VirtualHost>", 
 				ensure => present,
 				require => File_line[$path],
 		}

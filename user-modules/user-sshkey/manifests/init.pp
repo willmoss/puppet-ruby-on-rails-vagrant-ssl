@@ -32,11 +32,11 @@ class user-sshkey($user,$type) {
         }
  
         # install the new key
-        ssh_authorized_key { "$user-auth-key":
-                ensure  => present,
-                user    => $user,
-                type    => "ssh-$type",
-                key     => generate( "/etc/puppet/bin/extract_key", "/etc/puppet/user-modules/user-sshkey/files/$user/id_$type.pub" ),
-                require => [File["/home/$user/.ssh/id_$type.pub"]],
-        }
+        #ssh_authorized_key { "$user-auth-key":
+        #        ensure  => present,
+        #        user    => $user,
+        #        type    => "ssh-$type",
+        #        key     => generate( "/etc/puppet/bin/extract_key", "/etc/puppet/user-modules/user-sshkey/files/$user/id_$type.pub" ),
+        #        require => [File["/home/$user/.ssh/id_$type.pub"]],
+        #}
 }

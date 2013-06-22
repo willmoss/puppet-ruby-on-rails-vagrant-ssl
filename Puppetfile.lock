@@ -9,8 +9,6 @@ FORGE
     example42/monitor (2.0.0)
       example42/puppi (>= 2.0.0)
     example42/puppi (2.0.8)
-    puppetlabs/apt (1.1.0)
-      puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/firewall (0.3.0)
     puppetlabs/mysql (0.6.1)
       puppetlabs/stdlib (>= 2.2.1)
@@ -48,15 +46,6 @@ GIT
       ripienaar/concat (>= 0.2.0)
 
 GIT
-  remote: git://github.com/puppetlabs/puppetlabs-nodejs.git
-  ref: master
-  sha: b5e70b0e77548b50ea3216758fbf95f8b782f791
-  specs:
-    nodejs (0.2.1)
-      puppetlabs/apt (>= 0.0.3)
-      puppetlabs/stdlib (>= 2.0.0)
-
-GIT
   remote: git://github.com/thias/puppet-vsftpd.git
   ref: master
   sha: 8951de6ee6cdeae80b5077e76108a15952ad4590
@@ -73,7 +62,6 @@ GIT
 
 DEPENDENCIES
   apache (>= 0)
-  nodejs (>= 0)
   openssl (>= 0)
   postfix (>= 0)
   vsftpd (>= 0)

@@ -8,7 +8,7 @@ node precise64 {
   include php 
   
   # install node js
-  class {'nodejs':}
+  #class {'nodejs':}
   
   # Install apache
   class {'apache':
@@ -17,8 +17,8 @@ node precise64 {
   
 	# http , which redirect to ssl
   apache2::site { "bxmediaus.com-http":
-		sitedomain => "bxmediaus.com",
-		#sitedomain => "localhost",
+		#sitedomain => "bxmediaus.com",
+		sitedomain => "localhost",
 		ssl_redirect => true,
 	} 
 	
@@ -27,15 +27,16 @@ node precise64 {
 		{'path' => '/trade','dir' => '/home/webapp/bxmediaus.com.wmtrade/current/public/'}, 
 		{'path' => '/bicho','dir' => '/home/webapp/bxmediaus.com.bicho/current/public/'},
 		{'path' => '/p2pexchange','dir' => '/home/webapp/bxmediaus.com.p2pexchange/current/public/'},
+		{'path' => '/bitfication','dir' => '/home/webapp/bxmediaus.com.bitfication/current/public/'},
 	]
 
 	# ssl
 	apache2::site { "bxmediaus.com-ssl":
-		sitedomain => "bxmediaus.com",
-		#sitedomain => "localhost",
+		#sitedomain => "bxmediaus.com",
+		sitedomain => "localhost",
 		ssl => true,
-		ssl_have_certificates => true,
-		#ssl_have_certificates => false,
+		#ssl_have_certificates => true,
+		ssl_have_certificates => false,
 		rack_envs => $rack,
 		documentroot => "/home/webapp/bxmediaus.com.wordpress/",
 		priority => 25, 
@@ -79,7 +80,8 @@ node precise64 {
   exec { "wordpress chown":,
     command => "/bin/chown -R webapp:wordpress /home/webapp/bxmediaus.com.wordpress",
     path => '/bin',
-    user => 'root'
+    user => 'root',
+    require => Class["wordpress"],
   }
 
   # bundler
@@ -87,6 +89,9 @@ node precise64 {
    "bundler":
      provider => gem
   }
+  
+  package {
+   "openvpn": }
 
 	# Install MTA
 	# class { 'postfix': }
