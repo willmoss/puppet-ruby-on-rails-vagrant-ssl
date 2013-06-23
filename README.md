@@ -63,6 +63,8 @@ The default `nodes.pp` contains all the default settings you need, you only need
 
 However, if you'd like to just use a part of our module (for example, the apache2 module), then feel free.
 
+
+
 Deploying
 -----
 
