@@ -80,11 +80,13 @@ After this, you're ready to deploy. On your local mac/linux machine:
 
 (1) Place your private & public RSA keys (for SSH) into this directory: `user-modules/user-sshkey/files/webapp/` `id_rsa`, `id_rsa.pub`
 
-(2) Edit the settings in `config.sh` to point to your server IP & root user (a new user will be created, but puppet needs to run as root).
+(2) (optional) If you are using your own SSL certificates, place `.key`, `.csr` and `.crt` files (named after your domain) into this directory: `user-modules/apache2/files/`
 
-(3) Execute `ruby_puppet_installer.sh` to install ruby & puppet to your server via SSH.
+(3) Edit the settings in `config.sh` to point to your server IP & root user (a new user will be created, but puppet needs to run as root).
 
-(4) Execute `deploy.sh` to copy & run the puppet scripts on your server via SSH.
+(4) Execute `ruby_puppet_installer.sh` to install ruby & puppet to your server via SSH.
+
+(5) Execute `deploy.sh` to copy & run the puppet scripts on your server via SSH.
 
 You're done!
 
