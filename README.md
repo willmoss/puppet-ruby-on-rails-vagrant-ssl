@@ -64,7 +64,6 @@ The default `nodes.pp` contains all the default settings you need, you only need
 However, if you'd like to just use a part of our module (for example, the apache2 module), then feel free.
 
 
-
 Deploying
 -----
 
@@ -79,11 +78,13 @@ Then, if you make more changes to your environment, just commit the changes agai
 
 After this, you're ready to deploy. On your local mac/linux machine:
 
-(1) Edit the settings in `config.sh` to point to your server IP & root user (a new user will be created, but puppet needs to run as root).
+(1) Place your private & public RSA keys (for SSH) into this directory: `user-modules/user-sshkey/files/webapp/` `id_rsa`, `id_rsa.pub`
 
-(2) Execute `ruby_puppet_installer.sh` to install ruby & puppet to your server via SSH.
+(2) Edit the settings in `config.sh` to point to your server IP & root user (a new user will be created, but puppet needs to run as root).
 
-(3) Execute `deploy.sh` to copy & run the puppet scripts on your server via SSH.
+(3) Execute `ruby_puppet_installer.sh` to install ruby & puppet to your server via SSH.
+
+(4) Execute `deploy.sh` to copy & run the puppet scripts on your server via SSH.
 
 You're done!
 
