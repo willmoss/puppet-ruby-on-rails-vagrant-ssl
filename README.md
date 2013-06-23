@@ -1,7 +1,7 @@
-Quick Ruby On Rails (RoR) VPS : QRoR
+Quick Secure Ruby On Rails (RoR) VPS : QSRoR
 =============
 
-This is a quick way to get a Ruby on Rails enabled VPS set up on a linux box from scratch, in less than 10 minutes.
+This is a quick way to get a SSL-enabled Ruby on Rails VPS set up on a linux box from scratch, in less than 10 minutes.
 
 It uses Puppet, so you'll always have the latest version of all packages. It's also very easy to customize any settings to your liking, and provides a good base for new RoR VPS deployments.
 
@@ -117,6 +117,4 @@ If you want to chat to us, connect to our website: [bxmediaus.com][bxmediaus]
 
 [bxmediaus]: https://bxmediaus.com
 [apache-puppet]: https://github.com/puppetlabs/puppetlabs-apache
-[r2hc]: http://github.com/github/markup/tree/master/lib/github/markups.rb#L13
-[1]: http://github.com/github/markup/pulls
 
